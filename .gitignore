@@ -1,0 +1,21 @@
+# Entorno y compilación
+.venv/
+build/
+dist/
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Datos locales de la aplicación (nunca deben subirse)
+*.db
+*.db-journal
+registro.log
+
+# Sistema
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

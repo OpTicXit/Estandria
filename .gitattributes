@@ -1,0 +1,8 @@
+# Finales de línea uniformes en el repositorio
+* text=auto eol=lf
+*.bat text eol=crlf
+
+# Binarios
+*.png binary
+*.ico binary
+*.docx binary

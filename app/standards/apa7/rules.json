@@ -1,0 +1,1356 @@
+{
+  "id": "apa7",
+  "nombre": "APA 7.ª edición",
+  "edicion": "7.ª (2020)",
+  "descripcion": "Formato de trabajos según el Manual de Publicaciones de la American Psychological Association, 7.ª edición: página, tipografía, párrafos, portada, resumen, encabezados, numeración, citas en bloque, tablas, figuras y lista de referencias. Las reglas marcadas «Solo verificación» revisan aspectos de contenido (citas, orden, DOI) sin modificar el texto.",
+  "referencias": [
+    "American Psychological Association. (2020). Publication manual of the American Psychological Association (7th ed.). https://doi.org/10.1037/0000165-000",
+    "APA Style — Paper format: https://apastyle.apa.org/style-grammar-guidelines/paper-format"
+  ],
+  "categorias": [
+    {
+      "id": "pagina",
+      "nombre": "Configuración de página",
+      "descripcion": "Tamaño de papel, orientación y márgenes de cada sección."
+    },
+    {
+      "id": "tipografia",
+      "nombre": "Tipografía",
+      "descripcion": "Fuente, tamaño y color del texto, también dentro de las tablas."
+    },
+    {
+      "id": "parrafos",
+      "nombre": "Párrafos",
+      "descripcion": "Interlineado, alineación, sangrías y espaciado del texto principal."
+    },
+    {
+      "id": "estructura",
+      "nombre": "Estructura y encabezados",
+      "descripcion": "Portada, título, resumen, palabras clave y los cinco niveles de encabezado."
+    },
+    {
+      "id": "numeracion",
+      "nombre": "Numeración y encabezado de página",
+      "descripcion": "Número de página en el encabezado y numeración continua."
+    },
+    {
+      "id": "citas",
+      "nombre": "Citas",
+      "descripcion": "Formato de las citas en bloque y correspondencia entre citas y referencias."
+    },
+    {
+      "id": "referencias",
+      "nombre": "Referencias bibliográficas",
+      "descripcion": "Formato de la lista de referencias. Se aplica solo a los párrafos identificados como referencias."
+    },
+    {
+      "id": "tablas",
+      "nombre": "Tablas y figuras",
+      "descripcion": "Número, título y nota de cada tabla o figura. La estructura y los bordes de las tablas se conservan."
+    }
+  ],
+  "vinculos": [
+    {
+      "id": "fuente_tamano",
+      "descripcion": "El Manual asocia cada fuente con un tamaño. Al elegir una fuente de la lista, el tamaño se ajusta al indicado; puede cambiarlo después, pero se avisará si no corresponde.",
+      "origen": {
+        "regla": "tip_familia",
+        "parametro": "familia"
+      },
+      "destino": {
+        "regla": "tip_tamano",
+        "parametro": "tamano"
+      },
+      "valores": {
+        "Times New Roman": 12,
+        "Calibri": 11,
+        "Arial": 11,
+        "Georgia": 11,
+        "Lucida Sans Unicode": 10,
+        "Computer Modern": 10
+      },
+      "fuente": "Manual APA 7.ª ed., §2.19 Fuente"
+    }
+  ],
+  "reglas": [
+    {
+      "id": "pag_tamano_papel",
+      "nombre": "Tamaño de papel",
+      "descripcion": "Establece el tamaño de papel de todas las secciones conservando su orientación. El Manual no fija un tamaño: sus páginas de muestra usan papel carta estadounidense (8.5 × 11 in). Use el que exija su institución.",
+      "categoria": "pagina",
+      "tipo": "tamano_papel",
+      "alcance": [
+        "secciones"
+      ],
+      "parametros": {
+        "papel": {
+          "etiqueta": "Papel",
+          "tipo": "opcion",
+          "valor": "Carta",
+          "opciones": [
+            "Carta",
+            "A4",
+            "Oficio"
+          ],
+          "conformes": [
+            "Carta",
+            "A4",
+            "Oficio"
+          ]
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "contextual",
+      "fuente": "Manual APA 7.ª ed., §2.17 (páginas de muestra) y §2.22"
+    },
+    {
+      "id": "pag_orientacion",
+      "nombre": "Orientación de página",
+      "descripcion": "Fija la orientación de todas las secciones. Desactivada por defecto: APA admite páginas horizontales para tablas o figuras anchas, y forzarlas a vertical puede cortarlas.",
+      "categoria": "pagina",
+      "tipo": "orientacion",
+      "alcance": [
+        "secciones"
+      ],
+      "parametros": {
+        "orientacion": {
+          "etiqueta": "Orientación",
+          "tipo": "opcion",
+          "valor": "vertical",
+          "opciones": [
+            "vertical",
+            "horizontal"
+          ]
+        }
+      },
+      "activa_por_defecto": false,
+      "clasificacion": "contextual",
+      "fuente": "Práctica habitual; el Manual no fija la orientación"
+    },
+    {
+      "id": "pag_margenes",
+      "nombre": "Márgenes",
+      "descripcion": "Márgenes de 1 in (2.54 cm) en los cuatro lados de cada página.",
+      "categoria": "pagina",
+      "tipo": "margenes",
+      "alcance": [
+        "secciones"
+      ],
+      "parametros": {
+        "superior_cm": {
+          "etiqueta": "Superior",
+          "tipo": "numero",
+          "valor": 2.54,
+          "minimo": 0,
+          "maximo": 10,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "inferior_cm": {
+          "etiqueta": "Inferior",
+          "tipo": "numero",
+          "valor": 2.54,
+          "minimo": 0,
+          "maximo": 10,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "izquierdo_cm": {
+          "etiqueta": "Izquierdo",
+          "tipo": "numero",
+          "valor": 2.54,
+          "minimo": 0,
+          "maximo": 10,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "derecho_cm": {
+          "etiqueta": "Derecho",
+          "tipo": "numero",
+          "valor": 2.54,
+          "minimo": 0,
+          "maximo": 10,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.22 Márgenes"
+    },
+    {
+      "id": "tip_familia",
+      "nombre": "Familia tipográfica",
+      "descripcion": "Usa la misma fuente legible en todo el texto. El Manual menciona como ejemplos Calibri 11, Arial 11, Lucida Sans Unicode 10, Times New Roman 12, Georgia 11 y Computer Modern 10. Puede escribir otra fuente si su institución lo pide.",
+      "categoria": "tipografia",
+      "tipo": "familia_fuente",
+      "alcance": [
+        "portada",
+        "titulo",
+        "subtitulo",
+        "encabezado_1",
+        "encabezado_2",
+        "encabezado_3",
+        "encabezado_4",
+        "encabezado_5",
+        "titulo_resumen",
+        "resumen",
+        "palabras_clave",
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "leyenda",
+        "titulo_leyenda",
+        "leyenda_combinada",
+        "nota_tabla",
+        "titulo_referencias",
+        "referencia",
+        "tabla"
+      ],
+      "parametros": {
+        "familia": {
+          "etiqueta": "Fuente",
+          "tipo": "opcion",
+          "valor": "Times New Roman",
+          "editable": true,
+          "opciones": [
+            "Times New Roman",
+            "Calibri",
+            "Arial",
+            "Georgia",
+            "Lucida Sans Unicode",
+            "Computer Modern"
+          ],
+          "conformes": [
+            "Times New Roman",
+            "Calibri",
+            "Arial",
+            "Georgia",
+            "Lucida Sans Unicode",
+            "Computer Modern"
+          ]
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.19 Fuente"
+    },
+    {
+      "id": "tip_tamano",
+      "nombre": "Tamaño de fuente",
+      "descripcion": "Tamaño del texto. Depende de la fuente elegida: 12 pt para Times New Roman, 11 pt para Calibri, Arial o Georgia, 10 pt para Lucida Sans Unicode o Computer Modern. Al elegir una fuente de la lista, el tamaño se ajusta automáticamente.",
+      "categoria": "tipografia",
+      "tipo": "tamano_fuente",
+      "alcance": [
+        "portada",
+        "titulo",
+        "subtitulo",
+        "encabezado_1",
+        "encabezado_2",
+        "encabezado_3",
+        "encabezado_4",
+        "encabezado_5",
+        "titulo_resumen",
+        "resumen",
+        "palabras_clave",
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "leyenda",
+        "titulo_leyenda",
+        "leyenda_combinada",
+        "nota_tabla",
+        "titulo_referencias",
+        "referencia",
+        "tabla"
+      ],
+      "parametros": {
+        "tamano": {
+          "etiqueta": "Tamaño",
+          "tipo": "numero",
+          "valor": 12,
+          "minimo": 6,
+          "maximo": 72,
+          "paso": 0.5,
+          "unidad": "pt",
+          "conformes": [
+            10,
+            11,
+            12
+          ]
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.19 Fuente"
+    },
+    {
+      "id": "tip_color",
+      "nombre": "Color del texto",
+      "descripcion": "Aplica texto negro, incluidos los encabezados (Word los colorea de azul por defecto). Las páginas de muestra del Manual usan texto negro, pero el Manual no fija el color del texto como requisito explícito.",
+      "categoria": "tipografia",
+      "tipo": "color_fuente",
+      "alcance": [
+        "portada",
+        "titulo",
+        "subtitulo",
+        "encabezado_1",
+        "encabezado_2",
+        "encabezado_3",
+        "encabezado_4",
+        "encabezado_5",
+        "titulo_resumen",
+        "resumen",
+        "palabras_clave",
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "leyenda",
+        "titulo_leyenda",
+        "leyenda_combinada",
+        "nota_tabla",
+        "titulo_referencias",
+        "referencia",
+        "tabla"
+      ],
+      "parametros": {
+        "color": {
+          "etiqueta": "Color (hex)",
+          "tipo": "opcion",
+          "valor": "000000",
+          "opciones": [
+            "000000"
+          ],
+          "editable": true
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "recomendada",
+      "fuente": "Manual APA 7.ª ed., §2.17 (páginas de muestra)"
+    },
+    {
+      "id": "par_interlineado",
+      "nombre": "Interlineado doble",
+      "descripcion": "Doble espacio en todo el trabajo: portada, títulos, resumen, texto, listas, citas en bloque y rótulos de tablas y figuras. El contenido de las tablas y las notas no se modifica. Las referencias tienen su propia regla.",
+      "categoria": "parrafos",
+      "tipo": "interlineado",
+      "alcance": [
+        "portada",
+        "titulo",
+        "subtitulo",
+        "encabezado_1",
+        "encabezado_2",
+        "encabezado_3",
+        "encabezado_4",
+        "encabezado_5",
+        "titulo_resumen",
+        "resumen",
+        "palabras_clave",
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "leyenda",
+        "titulo_leyenda",
+        "leyenda_combinada",
+        "titulo_referencias"
+      ],
+      "parametros": {
+        "multiplo": {
+          "etiqueta": "Interlineado",
+          "tipo": "numero",
+          "valor": 2.0,
+          "minimo": 1,
+          "maximo": 3,
+          "paso": 0.05,
+          "unidad": "líneas"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.21 Interlineado"
+    },
+    {
+      "id": "par_alineacion",
+      "nombre": "Alineación a la izquierda",
+      "descripcion": "Texto alineado al margen izquierdo con el margen derecho irregular; no se justifica. Los títulos, la portada y las citas en bloque tienen sus propias reglas.",
+      "categoria": "parrafos",
+      "tipo": "alineacion",
+      "alcance": [
+        "parrafo",
+        "lista",
+        "resumen",
+        "palabras_clave",
+        "referencia"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "justificada",
+            "centro",
+            "derecha"
+          ]
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.23 Alineación de párrafos"
+    },
+    {
+      "id": "par_sangria_primera",
+      "nombre": "Sangría de primera línea",
+      "descripcion": "Sangría de 0.5 in (1.27 cm) en la primera línea de cada párrafo del texto y de la línea de palabras clave. No se aplica a listas, citas en bloque, resumen, referencias ni portada.",
+      "categoria": "parrafos",
+      "tipo": "sangria_primera_linea",
+      "alcance": [
+        "parrafo",
+        "palabras_clave"
+      ],
+      "parametros": {
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 1.27,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.24 Sangría de párrafos"
+    },
+    {
+      "id": "par_sangrias_laterales",
+      "nombre": "Sin sangría izquierda ni derecha",
+      "descripcion": "Elimina sangrías izquierda y derecha de los párrafos del texto. Las citas en bloque y las listas se detectan por separado y no se modifican.",
+      "categoria": "parrafos",
+      "tipo": "sangrias_laterales",
+      "alcance": [
+        "parrafo"
+      ],
+      "parametros": {
+        "izquierda_cm": {
+          "etiqueta": "Izquierda",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "derecha_cm": {
+          "etiqueta": "Derecha",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "recomendada",
+      "fuente": "Derivada de Manual APA 7.ª ed., §2.23–2.24 (texto al margen izquierdo, solo sangría de primera línea)"
+    },
+    {
+      "id": "par_espaciado_anterior",
+      "nombre": "Espaciado anterior",
+      "descripcion": "Sin espacio adicional antes de los párrafos y encabezados; el doble espacio ya separa las líneas.",
+      "categoria": "parrafos",
+      "tipo": "espaciado_anterior",
+      "alcance": [
+        "portada",
+        "titulo",
+        "subtitulo",
+        "encabezado_1",
+        "encabezado_2",
+        "encabezado_3",
+        "encabezado_4",
+        "encabezado_5",
+        "titulo_resumen",
+        "resumen",
+        "palabras_clave",
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "leyenda",
+        "titulo_leyenda",
+        "leyenda_combinada",
+        "nota_tabla",
+        "titulo_referencias",
+        "referencia"
+      ],
+      "parametros": {
+        "puntos": {
+          "etiqueta": "Espacio antes",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 72,
+          "paso": 1,
+          "unidad": "pt"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.21 Interlineado"
+    },
+    {
+      "id": "par_espaciado_posterior",
+      "nombre": "Espaciado posterior",
+      "descripcion": "Sin espacio adicional después de los párrafos y encabezados (Word agrega 8 pt por defecto).",
+      "categoria": "parrafos",
+      "tipo": "espaciado_posterior",
+      "alcance": [
+        "portada",
+        "titulo",
+        "subtitulo",
+        "encabezado_1",
+        "encabezado_2",
+        "encabezado_3",
+        "encabezado_4",
+        "encabezado_5",
+        "titulo_resumen",
+        "resumen",
+        "palabras_clave",
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "leyenda",
+        "titulo_leyenda",
+        "leyenda_combinada",
+        "nota_tabla",
+        "titulo_referencias",
+        "referencia"
+      ],
+      "parametros": {
+        "puntos": {
+          "etiqueta": "Espacio después",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 72,
+          "paso": 1,
+          "unidad": "pt"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.21 Interlineado"
+    },
+    {
+      "id": "est_titulo",
+      "nombre": "Título del trabajo",
+      "descripcion": "El título (estilo «Título» de Word) va centrado y en negrita.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "titulo"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "centro",
+          "opciones": [
+            "centro",
+            "izquierda"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.4 Título y §2.11"
+    },
+    {
+      "id": "est_portada",
+      "nombre": "Portada centrada",
+      "descripcion": "Los elementos de la portada (autor, afiliación, curso, docente, fecha) van centrados y sin sangría. El título tiene su propia regla. La portada se reconoce por un salto de página antes del primer encabezado.",
+      "categoria": "estructura",
+      "tipo": "bloque",
+      "alcance": [
+        "portada"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "centro",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "izquierda_cm": {
+          "etiqueta": "Sangría izquierda",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "primera_cm": {
+          "etiqueta": "Primera línea",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.3 Elementos de la portada"
+    },
+    {
+      "id": "est_resumen_titulo",
+      "nombre": "Título del resumen",
+      "descripcion": "El rótulo «Resumen» (o «Abstract») va centrado y en negrita.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "titulo_resumen"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "centro",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.9 Resumen"
+    },
+    {
+      "id": "est_resumen_pagina",
+      "nombre": "Resumen en página nueva",
+      "descripcion": "El resumen comienza en una página nueva.",
+      "categoria": "estructura",
+      "tipo": "salto_pagina_antes",
+      "alcance": [
+        "titulo_resumen"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.9 Resumen"
+    },
+    {
+      "id": "est_resumen_sangria",
+      "nombre": "Resumen sin sangría",
+      "descripcion": "El párrafo del resumen no lleva sangría de primera línea.",
+      "categoria": "estructura",
+      "tipo": "sangria_primera_linea",
+      "alcance": [
+        "resumen"
+      ],
+      "parametros": {
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.9 Resumen"
+    },
+    {
+      "id": "est_palabras_clave",
+      "nombre": "Etiqueta «Palabras clave:»",
+      "descripcion": "La etiqueta «Palabras clave:» va en cursiva; las palabras que la siguen, no. Solo se modifica la etiqueta.",
+      "categoria": "estructura",
+      "tipo": "etiqueta_inicial",
+      "alcance": [
+        "palabras_clave"
+      ],
+      "parametros": {
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": true
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.9 Resumen (palabras clave)"
+    },
+    {
+      "id": "est_nivel_1",
+      "nombre": "Encabezado de nivel 1",
+      "descripcion": "Centrado y en negrita. El uso de mayúsculas tipo título es una cuestión de contenido y no se modifica.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "encabezado_1"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "centro",
+          "opciones": [
+            "centro",
+            "izquierda"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.27 Niveles de encabezado"
+    },
+    {
+      "id": "est_nivel_2",
+      "nombre": "Encabezado de nivel 2",
+      "descripcion": "Alineado a la izquierda y en negrita.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "encabezado_2"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.27 Niveles de encabezado"
+    },
+    {
+      "id": "est_nivel_3",
+      "nombre": "Encabezado de nivel 3",
+      "descripcion": "Alineado a la izquierda, en negrita y cursiva.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "encabezado_3"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.27 Niveles de encabezado"
+    },
+    {
+      "id": "est_nivel_4",
+      "nombre": "Encabezado de nivel 4",
+      "descripcion": "Con sangría de 1.27 cm y en negrita. APA indica además terminarlo en punto y continuar el texto en la misma línea: eso modifica el contenido y no se hace automáticamente.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "encabezado_4"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 1.27,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.27 Niveles de encabezado"
+    },
+    {
+      "id": "est_nivel_5",
+      "nombre": "Encabezado de nivel 5",
+      "descripcion": "Con sangría de 1.27 cm, en negrita y cursiva. Como en el nivel 4, el punto final y el texto en la misma línea no se modifican.",
+      "categoria": "estructura",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "encabezado_5"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 1.27,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.27 Niveles de encabezado"
+    },
+    {
+      "id": "num_numero_pagina",
+      "nombre": "Número de página",
+      "descripcion": "Número de página en la esquina superior derecha de todas las páginas, incluida la portada. Si el encabezado ya tiene contenido, se conserva y el número se agrega en un párrafo nuevo; si el número está colocado con tabulaciones, no se toca.",
+      "categoria": "numeracion",
+      "tipo": "numero_pagina",
+      "alcance": [
+        "secciones"
+      ],
+      "parametros": {
+        "posicion": {
+          "etiqueta": "Posición",
+          "tipo": "opcion",
+          "valor": "derecha",
+          "opciones": [
+            "derecha",
+            "centro",
+            "izquierda"
+          ]
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.18 Encabezado de página"
+    },
+    {
+      "id": "num_inicio",
+      "nombre": "Numeración desde la portada",
+      "descripcion": "La portada es la página 1 y la numeración continúa sin reiniciarse en las secciones siguientes.",
+      "categoria": "numeracion",
+      "tipo": "numeracion_inicio",
+      "alcance": [
+        "secciones"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.18 Encabezado de página"
+    },
+    {
+      "id": "cit_bloque",
+      "nombre": "Formato de citas en bloque",
+      "descripcion": "Las citas de 40 palabras o más van en bloque, con sangría izquierda de 0.5 in (1.27 cm) y sin sangría adicional en la primera línea. Se aplica a los párrafos que el análisis identifica como citas en bloque.",
+      "categoria": "citas",
+      "tipo": "bloque",
+      "alcance": [
+        "cita_bloque"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "izquierda_cm": {
+          "etiqueta": "Sangría izquierda",
+          "tipo": "numero",
+          "valor": 1.27,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "primera_cm": {
+          "etiqueta": "Primera línea",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §8.27 Citas en bloque"
+    },
+    {
+      "id": "cit_con_referencia",
+      "nombre": "Cada cita tiene su referencia",
+      "descripcion": "Busca citas autor-fecha en el texto, como (García, 2019) o García (2019), y comprueba que cada una tenga una entrada en la lista de referencias con el mismo primer autor y año. La detección es aproximada. Solo verificación: no modifica el texto; los casos encontrados aparecen como «Para revisar».",
+      "categoria": "citas",
+      "tipo": "citas_con_referencia",
+      "alcance": [
+        "parrafo",
+        "lista",
+        "cita_bloque",
+        "nota_tabla",
+        "resumen"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 8 (correspondencia entre citas y referencias)"
+    },
+    {
+      "id": "ref_titulo",
+      "nombre": "Título de la lista de referencias",
+      "descripcion": "El rótulo «Referencias» va centrado y en negrita.",
+      "categoria": "referencias",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "titulo_referencias"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "centro",
+          "opciones": [
+            "centro",
+            "izquierda"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.12 y §9.43"
+    },
+    {
+      "id": "ref_nueva_pagina",
+      "nombre": "Referencias en página nueva",
+      "descripcion": "La lista de referencias comienza en una página nueva después del texto.",
+      "categoria": "referencias",
+      "tipo": "salto_pagina_antes",
+      "alcance": [
+        "titulo_referencias"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §2.12 Lista de referencias"
+    },
+    {
+      "id": "ref_sangria_francesa",
+      "nombre": "Sangría francesa",
+      "descripcion": "Sangría francesa de 0.5 in (1.27 cm) en cada entrada. Se aplica solo a los párrafos identificados como referencias, nunca al resto del documento.",
+      "categoria": "referencias",
+      "tipo": "sangria_francesa",
+      "alcance": [
+        "referencia"
+      ],
+      "parametros": {
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 1.27,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §9.43 Formato de la lista de referencias"
+    },
+    {
+      "id": "ref_interlineado",
+      "nombre": "Interlineado de las referencias",
+      "descripcion": "Doble espacio dentro de cada entrada y entre entradas.",
+      "categoria": "referencias",
+      "tipo": "interlineado",
+      "alcance": [
+        "referencia"
+      ],
+      "parametros": {
+        "multiplo": {
+          "etiqueta": "Interlineado",
+          "tipo": "numero",
+          "valor": 2.0,
+          "minimo": 1,
+          "maximo": 3,
+          "paso": 0.05,
+          "unidad": "líneas"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §9.43 y §2.21"
+    },
+    {
+      "id": "ref_citada",
+      "nombre": "Cada referencia se cita",
+      "descripcion": "Comprueba que cada entrada de la lista de referencias se cite al menos una vez en el texto. Solo verificación: no modifica el texto; los casos encontrados aparecen como «Para revisar».",
+      "categoria": "referencias",
+      "tipo": "referencia_citada",
+      "alcance": [
+        "referencia"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 8 (correspondencia entre citas y referencias)"
+    },
+    {
+      "id": "ref_orden",
+      "nombre": "Orden alfabético",
+      "descripcion": "Las entradas van en orden alfabético por el apellido del primer autor. La comparación es aproximada (letra por letra, sin tildes ni puntuación) y no aplica los casos especiales del Manual. Solo verificación: no modifica el texto; los casos encontrados aparecen como «Para revisar».",
+      "categoria": "referencias",
+      "tipo": "orden_alfabetico",
+      "alcance": [
+        "referencia"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., §9.44 Orden de las obras"
+    },
+    {
+      "id": "ref_doi",
+      "nombre": "DOI como enlace",
+      "descripcion": "Los DOI se escriben como enlace https://doi.org/…, no con el prefijo «doi:» ni con dx.doi.org. Solo verificación: no modifica el texto; los casos encontrados aparecen como «Para revisar».",
+      "categoria": "referencias",
+      "tipo": "formato_doi",
+      "alcance": [
+        "referencia"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 9 (DOI y URL)"
+    },
+    {
+      "id": "ref_anio",
+      "nombre": "Año de publicación",
+      "descripcion": "Cada entrada indica el año entre paréntesis después del autor, o «(s. f.)» si no tiene fecha. Solo verificación: no modifica el texto; los casos encontrados aparecen como «Para revisar».",
+      "categoria": "referencias",
+      "tipo": "anio_referencia",
+      "alcance": [
+        "referencia"
+      ],
+      "parametros": {},
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 9 (elemento fecha)"
+    },
+    {
+      "id": "tab_numero",
+      "nombre": "Número de tabla o figura",
+      "descripcion": "El número («Tabla 1», «Figura 1») va en negrita, alineado a la izquierda, encima de la tabla o figura. Solo se reconoce cuando está en su propia línea.",
+      "categoria": "tablas",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "leyenda"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 7 (números de tablas y figuras)"
+    },
+    {
+      "id": "tab_titulo",
+      "nombre": "Título de tabla o figura",
+      "descripcion": "El título va en cursiva, alineado a la izquierda, en la línea siguiente al número y antes de la tabla o figura.",
+      "categoria": "tablas",
+      "tipo": "formato_titulo",
+      "alcance": [
+        "titulo_leyenda"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "negrita": {
+          "etiqueta": "Negrita",
+          "tipo": "booleano",
+          "valor": false
+        },
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": true
+        },
+        "sangria_cm": {
+          "etiqueta": "Sangría",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 7 (títulos de tablas y figuras)"
+    },
+    {
+      "id": "tab_nota_formato",
+      "nombre": "Nota de tabla o figura",
+      "descripcion": "La nota que sigue a la tabla o figura (empieza con «Nota.») va alineada a la izquierda y sin sangría.",
+      "categoria": "tablas",
+      "tipo": "bloque",
+      "alcance": [
+        "nota_tabla"
+      ],
+      "parametros": {
+        "alineacion": {
+          "etiqueta": "Alineación",
+          "tipo": "opcion",
+          "valor": "izquierda",
+          "opciones": [
+            "izquierda",
+            "centro"
+          ]
+        },
+        "izquierda_cm": {
+          "etiqueta": "Sangría izquierda",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        },
+        "primera_cm": {
+          "etiqueta": "Primera línea",
+          "tipo": "numero",
+          "valor": 0,
+          "minimo": 0,
+          "maximo": 5,
+          "paso": 0.01,
+          "unidad": "cm"
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 7 (notas de tablas y figuras)"
+    },
+    {
+      "id": "tab_nota_etiqueta",
+      "nombre": "Etiqueta «Nota.»",
+      "descripcion": "La etiqueta «Nota.» va en cursiva; el resto de la nota no se modifica.",
+      "categoria": "tablas",
+      "tipo": "etiqueta_inicial",
+      "alcance": [
+        "nota_tabla"
+      ],
+      "parametros": {
+        "cursiva": {
+          "etiqueta": "Cursiva",
+          "tipo": "booleano",
+          "valor": true
+        }
+      },
+      "activa_por_defecto": true,
+      "clasificacion": "obligatoria",
+      "fuente": "Manual APA 7.ª ed., cap. 7 (notas de tablas y figuras)"
+    }
+  ]
+}
