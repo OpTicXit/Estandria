@@ -69,8 +69,12 @@ antes de entregártelo.
 
 ## Descarga y uso
 
-1. Descarga `Estandria-<versión>-windows-x64.zip` desde **[Releases](../../releases)** y descomprímelo.
-2. Ejecuta `Estandria.exe`. No necesitas instalar Python ni ninguna otra cosa.
+1. Entra en **[Releases](../../releases)** y descarga una de las dos versiones:
+   - **`Estandria-<versión>-windows-x64.exe`**: un solo archivo, listo para abrir. Tarda unos segundos
+     más en arrancar porque se descomprime cada vez.
+   - **`Estandria-<versión>-windows-x64.zip`** (recomendado): descomprímelo y abre `Estandria\Estandria.exe`.
+     Arranca más rápido.
+2. No necesitas instalar Python ni ninguna otra cosa.
 3. **Importa** tu documento (botón o arrastrar y soltar), elige la **normativa**, ajusta las reglas,
    revisa el **análisis** y la **vista previa**, y pulsa **Aplicar cambios y exportar**.
 
