@@ -5,6 +5,7 @@ import json
 import os
 import re
 import subprocess
+from datetime import datetime
 from pathlib import Path
 
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, QSize, Qt, QTimer
@@ -15,7 +16,7 @@ from PySide6.QtWidgets import (
 
 from app import APP_NAME, APP_VERSION
 from app.core.document_analyzer import analyze_document, known_scopes
-from app.core.document_loader import FileInfo, LoadError, create_working_copy, inspect_file
+from app.core.document_loader import FileInfo, LoadError, create_working_copy, inspect_file, prune_backups
 from app.core.document_processor import apply_selection, process_document
 from app.core.document_validator import validate
 from app.core.exceptions import ExceptionSet
@@ -26,8 +27,11 @@ from app.database.settings_repository import SettingsRepository
 from app.formats.docx_handler import open_docx
 from app.formats.docx_operations import OPERATIONS
 from app.formats.docx_preview import render_html
+from app.i18n import set_language, t
 from app.paths import standards_dir, user_data_dir
+from app.style import ReviewText, analyze, apply_findings, detect_language
 from app.ui import theme
+from app.ui.style_page import StylePage, finding_key
 from app.ui.analysis_page import AnalysisPage
 from app.ui.home_page import HomePage
 from app.ui.import_page import ImportPage
@@ -44,6 +48,7 @@ MAX_RECENT = 8
 NAVIGATION = (
     ("inicio", "Inicio", "home"),
     ("documento", "Documento", "file"),
+    ("estilo", "Estilo", "pen"),
     ("normativa", "Normativa", "sliders"),
     ("analisis", "Análisis", "scan"),
     ("vista", "Vista previa", "eye"),
@@ -56,6 +61,28 @@ _INVALID_FILENAME = re.compile(r'[<>:"/\\|?*]')
 def _load_job(info: FileInfo, folder: Path | None, keep: int):
     copy = create_working_copy(info, folder, keep)
     return info, copy, analyze_document(open_docx(copy))
+
+
+def _style_job(copy: Path):
+    review = ReviewText(analyze_document(open_docx(copy)))
+    language = detect_language(review)
+    return language, review.text, analyze(review) if language == "es" else []
+
+
+def _accept_style_job(copy: Path, folder: Path, keep: int, findings: list):
+    """Aplica los hallazgos aceptados en una NUEVA copia de trabajo; la anterior y el original no cambian."""
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+    new_copy = folder / f"{stamp}_{copy.name.split('_', 1)[-1]}"
+    doc = open_docx(copy)
+    applied = apply_findings(ReviewText(analyze_document(doc)), findings)
+    try:
+        doc.save(str(new_copy))
+        structure = analyze_document(open_docx(new_copy))  # verifica que la copia nueva se abre
+    except Exception:
+        new_copy.unlink(missing_ok=True)
+        raise
+    prune_backups(folder, keep, protect=(new_copy,))
+    return (new_copy, structure, len(applied), *_style_job(new_copy))
 
 
 def _comparable(data: dict) -> str:
@@ -111,6 +138,8 @@ class MainWindow(QMainWindow):
         self.runner = TaskRunner(self)
         self.runner.busyChanged.connect(self._on_busy)
         theme.animations_enabled = self.settings.get("animaciones")
+        set_language(self.settings.get("idioma"))
+        self.style_rejected: set[tuple] = set()  # hallazgos de estilo rechazados en esta sesión
 
         self._build_ui()
         self.home_page.set_recent(self._recent())
@@ -200,7 +229,9 @@ class MainWindow(QMainWindow):
         self.results_page = ResultsPage()
         self.settings_page = SettingsPage(self.profiles, self.settings, self.standards)
         self.settings_page.current_copy_getter = lambda: self.working_copy
-        self.pages = {"inicio": self.home_page, "documento": self.import_page, "normativa": self.standards_page,
+        self.style_page = StylePage()
+        self.pages = {"inicio": self.home_page, "documento": self.import_page, "estilo": self.style_page,
+                      "normativa": self.standards_page,
                       "analisis": self.analysis_page, "vista": self.preview_page, "resultados": self.results_page,
                       "configuracion": self.settings_page}
         self.import_page.set_context(self.exceptions, lambda: self.selections[self.standard.id])
@@ -256,6 +287,11 @@ class MainWindow(QMainWindow):
         self.settings_page.profileCreateRequested.connect(self.save_profile_as)
         self.settings_page.profilesChanged.connect(self._refresh_profiles)
         self.settings_page.appearanceChanged.connect(self._apply_appearance)
+        self.settings_page.languageChanged.connect(self._apply_language)
+        self.style_page.analyzeRequested.connect(self.run_style)
+        self.style_page.acceptRequested.connect(self.accept_style)
+        self.style_page.rejected.connect(self._reject_style)
+        self.nav_buttons["estilo"].setText(f"  {t('estilo.nav')}")
 
     # ------------------------------------------------------------------ navegación
     def _go(self, key: str, animate: bool = True) -> None:
@@ -275,6 +311,8 @@ class MainWindow(QMainWindow):
     def _update_navigation(self) -> None:
         self.nav_buttons["analisis"].setEnabled(self.report is not None)
         self.nav_buttons["vista"].setEnabled(self.working_copy is not None)
+        self.nav_buttons["estilo"].setEnabled(self.working_copy is not None)
+        self.style_page.set_document(self.working_copy is not None)
         self.nav_buttons["resultados"].setEnabled(self.result is not None)
         self.standards_page.set_document(self.file_info.nombre if self.working_copy else None)
 
@@ -324,6 +362,8 @@ class MainWindow(QMainWindow):
         self.file_info, self.working_copy, self.structure = payload
         self.report = self.result = None
         self.exceptions.clear()  # las excepciones señalan elementos de un documento concreto
+        self.style_rejected.clear()
+        self.style_page.show_findings("es", "", [])
         self.import_page.show_structure(self.structure)
         self._update_navigation()
         self._add_recent(str(self.file_info.ruta))
@@ -428,6 +468,45 @@ class MainWindow(QMainWindow):
             self.standards_page.message.show_message(f"Se creó el perfil «{profile.nombre}».", "success")
             self._refresh_profiles()
             return
+
+    # ------------------------------------------------------------------ limpieza de estilo
+    def run_style(self) -> None:
+        if not self.working_copy:
+            return
+        copy = self.working_copy
+        self.runner.run(lambda: _style_job(copy), self._on_style, self._on_task_error, t("estilo.analizar") + "…")
+
+    def _on_style(self, payload, message: str = "") -> None:
+        language, text, findings = payload
+        visible = [f for f in findings if finding_key(f) not in self.style_rejected]
+        self.style_page.show_findings(language, text, visible, message)
+        self.status_label.setText(t("estilo.titulo"))
+
+    def accept_style(self, findings: list) -> None:
+        if not self.working_copy or not findings:
+            return
+        copy, folder, keep = self.working_copy, self.settings_page.backup_path(), self.settings.get("conservar_respaldos")
+        self.runner.run(lambda: _accept_style_job(copy, folder, keep, findings), self._on_style_accepted,
+                        self._on_task_error, t("estilo.aceptar") + "…")
+
+    def _on_style_accepted(self, payload) -> None:
+        new_copy, structure, applied, language, text, findings = payload
+        self.working_copy, self.structure = new_copy, structure
+        self.report = self.result = None  # el texto cambió: el análisis de formato anterior ya no vale
+        self.import_page.show_structure(structure)
+        self._update_navigation()
+        self._on_style((language, text, findings), t("estilo.aplicados", n=applied))
+
+    def _reject_style(self, key: tuple) -> None:
+        self.style_rejected.add(key)
+        page = self.style_page
+        page.show_findings("es", page.review_text, [f for f in page.findings if finding_key(f) != key],
+                           t("estilo.rechazado"))
+
+    def _apply_language(self) -> None:
+        set_language(self.settings.get("idioma"))
+        self.nav_buttons["estilo"].setText(f"  {t('estilo.nav')}")
+        self.style_page.retranslate()
 
     def _apply_appearance(self) -> None:
         theme.animations_enabled = self.settings.get("animaciones")

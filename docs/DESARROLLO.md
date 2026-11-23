@@ -13,7 +13,7 @@ py -3 -m venv .venv
 .\.venv\Scripts\python.exe main.py
 ```
 
-Pruebas (98, sobre documentos `.docx` reales generados por `tests/samples.py`):
+Pruebas (122, sobre documentos `.docx` reales generados por `tests/samples.py`):
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -80,6 +80,8 @@ app/
     profile_repository.py       perfiles
     settings_repository.py      preferencias
   standards/apa7/rules.json     catálogo APA 7
+  style/                        limpieza de estilo: texto con posiciones, reglas y léxico
+  i18n/                         catálogos de textos (es-419, es-ES, en)
   ui/                           PySide6: ventana, páginas, diálogos, tema, tareas en segundo plano
 assets/                         hoja de estilos Dark Tech e iconos SVG
 tests/                          pruebas y generador de documentos de prueba
@@ -173,6 +175,36 @@ Un catálogo con errores no se carga, y el mensaje indica la regla y el problema
 - **configuraciones contradictorias:** dos reglas que escriben la misma propiedad sobre el mismo tipo de
   elemento deben declararse en `conflictos`, de modo que nunca puedan estar activas a la vez;
 - vínculos que apunten a reglas y parámetros existentes, con valores válidos y coherentes con los predeterminados.
+
+## Limpieza de estilo (`app/style/`)
+
+| Archivo | Responsabilidad |
+|---|---|
+| `text_model.py` | Texto de revisión con posiciones fieles al documento y aplicación de cambios aceptados |
+| `rules.py` | Las nueve reglas, el plegado de tildes, la raíz aproximada y la detección de idioma |
+| `lexicon_es.json` | Léxicos y umbrales (se amplían sin tocar código) |
+| `app/i18n/*.json` | Explicaciones y etiquetas: `es-419`, `es-ES` y `en` |
+
+**Texto de revisión.** Es la unión de los bloques del cuerpo en orden, separados por `\n`. Cada párrafo
+aporta la concatenación de sus nodos `<w:t>`; tablas y otros bloques aportan una cadena vacía. Por eso
+cada posición corresponde a un carácter concreto del DOCX, y `texto[ini:fin] == excerpt` siempre.
+
+**Plegado de tildes.** Reemplaza cada carácter por exactamente uno (`á→a`, `ñ→n`…, en minúscula). No se
+usa `normalize('NFD')`, porque cambia la longitud y rompería las posiciones.
+
+**Raíz aproximada.** Quita `-es`/`-s` y trunca a 7 caracteres. Puede agrupar palabras distintas; por eso
+el umbral es 3 y el hallazgo es revisable.
+
+**Contrato del hallazgo.** `ruleId, severity, ini, fin, excerpt, medido, umbral, explicacion,
+propuesta, aceptable`, más dos campos:
+- `elemento`: bloque del documento, para navegar hasta el hallazgo;
+- `contexto`: valores que completan la explicación, por ejemplo cuántas palabras se analizaron.
+
+No existe ningún campo de puntuación ni de agregado, y una prueba lo verifica.
+
+**Al aceptar.** Se copia la copia de trabajo actual, se aplican los cambios de atrás hacia adelante
+(omitiendo los solapados) y se verifica que cada párrafo quede exactamente como se esperaba. El
+documento original nunca se modifica.
 
 ## Datos locales
 

@@ -9,6 +9,10 @@ ONEFILE = os.environ.get("ESTANDRIA_ONEFILE") == "1"
 datas = [
     ("app/standards", "app/standards"),  # catálogos JSON de normativas
     ("assets", "assets"),                # estilos e iconos
+    ("app/style/lexicon_es.json", "app/style"),  # léxicos de la limpieza de estilo
+    ("app/i18n/es-419.json", "app/i18n"),        # catálogos de idioma
+    ("app/i18n/es-ES.json", "app/i18n"),
+    ("app/i18n/en.json", "app/i18n"),
     ("LICENSE.md", "."),                 # licencia y avisos legales dentro del ejecutable
     ("NOTICE.md", "."),
     ("THIRD_PARTY_NOTICES.md", "."),

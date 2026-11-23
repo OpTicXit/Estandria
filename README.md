@@ -42,6 +42,7 @@ antes de entregártelo.
 | 👁️ **Vista previa antes/después** | El original y el resultado lado a lado, con los cambios resaltados, generada en memoria. |
 | 🛡️ **Excepciones** | «No toques esta tabla», «conserva el formato de este título», «excluye esta sección»: tus excepciones mandan. |
 | 📚 **Citas y referencias** | Señala citas sin referencia, referencias que no se citan, orden alfabético, DOI mal escritos y años ausentes, sin reescribir tu texto. |
+| ✍️ **Limpieza de estilo** | Señala muletillas, pleonasmos, repeticiones, oraciones largas, pasivas y nominalizaciones, con una reescritura propuesta que aceptas o rechazas una por una. Sin puntuaciones ni porcentajes: cada hallazgo muestra su valor medido y su umbral. |
 | 💾 **Perfiles** | Guarda configuraciones como «APA 7 Profesor» o «APA 7 Universidad» y cárgalas en un clic. |
 | ✅ **Exportación verificada** | Cada archivo exportado se vuelve a abrir y se comprueba: el texto debe ser idéntico (huella SHA-256) y no puede faltar ninguna tabla, imagen ni enlace. |
 | 🔒 **Privado por diseño** | Todo ocurre en tu equipo. Sin cuentas, sin nube, sin telemetría. |
@@ -65,7 +66,41 @@ antes de entregártelo.
     <td align="center"><b>Análisis</b>: qué cumple, qué cambiará y qué revisar</td>
     <td align="center"><b>Vista previa</b>: original frente a resultado</td>
   </tr>
+  <tr>
+    <td colspan="2"><img src="docs/capturas/6-estilo.png" alt="Limpieza de estilo"></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><b>Limpieza de estilo</b>: cada sugerencia con su explicación, su umbral y el cambio propuesto</td>
+  </tr>
 </table>
+
+## Limpieza de estilo
+
+Una revisión de redacción **determinista y verificable**, separada del formato:
+
+| Regla | Qué señala | Umbral |
+|---|---|---|
+| Muletillas | «cabe destacar que», «hoy en día»… | 1 aparición |
+| Pleonasmos | «pero sin embargo» → «pero», «con el fin de» → «para»… | 1 aparición |
+| Adjetivos valorativos | «fundamental», «crucial», «innovador»… | 3 por cada 1000 palabras |
+| Intensificadores | «muy», «realmente», «sumamente»… | 2 por cada 1000 palabras |
+| Repetición léxica | la misma raíz en un párrafo de 40 palabras o más | 3 veces |
+| Oraciones largas | con punto de corte propuesto cuando hay uno claro | más de 38 palabras |
+| Ritmo uniforme | oraciones de longitud muy pareja | desviación menor que 4 |
+| Voz pasiva | propone la activa solo si hay agente («por …») | 15 % de las oraciones |
+| Nominalizaciones | «la realización de» → «realizar» | 1 aparición |
+
+- **No modifica nada hasta que aceptas un hallazgo concreto.** Cada aceptación crea una nueva copia de
+  trabajo y el original nunca cambia.
+- **Sin puntuaciones:** no hay nota, porcentaje ni índice global. Toda cifra se puede recalcular a mano
+  desde el fragmento señalado.
+- **No detecta ni juzga autoría.** Es una ayuda de redacción para el autor, no un clasificador.
+- **Exclusiones:** no toca citas entre comillas, citas en bloque, referencias, encabezados, tablas ni pies
+  de figura, porque alterar una cita es alterar una fuente.
+- **Ampliable sin programar:** los léxicos y umbrales están en
+  [`app/style/lexicon_es.json`](app/style/lexicon_es.json).
+- **Idiomas:** la interfaz del módulo está en español latinoamericano, español de España e inglés. Los
+  léxicos son del español, así que con documentos en inglés el módulo se desactiva y lo avisa.
 
 ## Descarga y uso
 
@@ -132,6 +167,7 @@ Lo que exigiría reescribir tu texto (completar una referencia, reordenar la lis
 - [x] APA 7.ª edición (39 reglas)
 - [x] Excepciones y vista previa antes/después
 - [x] Perfiles y configuración (SQLite)
+- [x] Limpieza de estilo determinista
 - [ ] DOC, ODT y RTF mediante conversión
 - [ ] Nuevas normativas: ICONTEC, IEEE, Vancouver, MLA, Chicago, formato personalizado
 - [ ] Instalador

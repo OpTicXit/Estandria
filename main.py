@@ -43,7 +43,7 @@ def _self_test(document: Path, output_dir: Path) -> int:
     from app.database.database import Database
     from app.database.profile_repository import ProfileRepository
     from app.formats.docx_handler import open_docx
-    from app.ui.main_window import MainWindow, _preview_job
+    from app.ui.main_window import MainWindow, _preview_job, _style_job
     from app.ui.theme import apply_theme, icon
 
     app = QApplication(sys.argv[:1])
@@ -67,6 +67,8 @@ def _self_test(document: Path, output_dir: Path) -> int:
         report["elementos"] = len(structure.elements)
         exceptions = ExceptionSet()
         exceptions.add(DocException("elemento", (structure.elements[-1].index,)))
+        language, _, style_findings = _style_job(copy)
+        report["estilo"] = {"idioma": language, "hallazgos": len(style_findings)}
         preview = _preview_job(copy, selection, exceptions)
         window.preview_page.show_preview(preview)
         report["vista_previa"] = bool(window.preview_page.after.toPlainText().strip() and preview.changes)
@@ -77,7 +79,8 @@ def _self_test(document: Path, output_dir: Path) -> int:
         report["cumplimiento"] = {r.rule.id: r.estado for r in result.cumplimiento.reglas}
         report["excluidos"] = sum(r.excluidos for r in result.cumplimiento.reglas)
         report["ok"] = bool(report["iconos_svg"] and report["integridad_ok"] and not result.errores
-                            and report["vista_previa"] and report["excluidos"] > 0 and report["perfiles"])
+                            and report["vista_previa"] and report["excluidos"] > 0 and report["perfiles"]
+                            and report["estilo"]["idioma"] == "es")
     except Exception as exc:
         report["excepcion"] = "".join(traceback.format_exception(exc))
         report["ok"] = False

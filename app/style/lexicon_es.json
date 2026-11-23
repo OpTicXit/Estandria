@@ -1,0 +1,59 @@
+{
+  "descripcion": "Léxicos y umbrales de la limpieza de estilo en español. Se amplían aquí, sin tocar código.",
+  "umbrales": {
+    "muletilla": 1,
+    "pleonasmo": 1,
+    "adjetivo_vacio": 3,
+    "intensificador": 2,
+    "repeticion": 3,
+    "repeticion_min_palabras_parrafo": 40,
+    "oracion_larga": 38,
+    "prosa_uniforme_sigma": 4,
+    "prosa_uniforme_media_min": 15,
+    "prosa_uniforme_media_max": 30,
+    "prosa_uniforme_min_oraciones": 8,
+    "pasiva_porcentaje": 15,
+    "nominalizacion": 1
+  },
+  "muletillas": [
+    "cabe destacar que", "cabe mencionar que", "cabe resaltar que",
+    "es importante señalar que", "es importante destacar que", "resulta importante mencionar",
+    "en este orden de ideas", "sin lugar a dudas", "no cabe duda de que", "hoy en día",
+    "a lo largo de la historia", "vale la pena mencionar"
+  ],
+  "pleonasmos": {
+    "pero sin embargo": "pero",
+    "como por ejemplo": "como",
+    "lapso de tiempo": "lapso",
+    "período de tiempo": "período",
+    "con el fin de": "para",
+    "en base a": "con base en",
+    "conclusión final": "conclusión",
+    "de forma tal que": "de modo que"
+  },
+  "vacio": [
+    "fundamental", "fundamentales", "crucial", "cruciales", "esencial", "esenciales",
+    "significativo", "significativa", "significativos", "significativas",
+    "robusto", "robusta", "robustos", "robustas", "integral", "integrales",
+    "holístico", "holística", "holísticos", "holísticas",
+    "innovador", "innovadora", "innovadores", "innovadoras",
+    "revolucionario", "revolucionaria", "revolucionarios", "revolucionarias",
+    "fascinante", "fascinantes"
+  ],
+  "intensificadores": ["muy", "realmente", "sumamente", "extremadamente", "altamente"],
+  "stopwords_repeticion": [
+    "para", "como", "este", "esta", "estos", "estas", "donde", "cuando", "entre", "sobre",
+    "desde", "hasta", "porque", "también", "mismo", "misma"
+  ],
+  "ser": ["es", "son", "fue", "fueron", "era", "eran", "será", "serán", "sido", "ser", "sea", "sean", "fuera", "fueran", "siendo"],
+  "participios_irregulares": [
+    "hecho", "hecha", "hechos", "hechas", "dicho", "dicha", "dichos", "dichas",
+    "escrito", "escrita", "escritos", "escritas", "visto", "vista", "vistos", "vistas",
+    "puesto", "puesta", "puestos", "puestas", "roto", "rota", "rotos", "rotas"
+  ],
+  "abreviaturas": ["p", "pp", "ej", "al", "dr", "dra", "sr", "sra", "etc", "vol", "ed", "eds", "cap", "fig", "num", "no", "art", "op", "cit", "ibid", "aprox", "vs", "ca"],
+  "idioma": {
+    "es": ["de", "la", "que", "el", "en", "y", "los", "del", "se", "las", "por", "un", "para", "con", "una", "es", "al", "lo"],
+    "en": ["the", "of", "and", "to", "in", "is", "that", "for", "it", "with", "as", "was", "on", "are", "be", "this", "by", "which"]
+  }
+}

@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
 from app.core.document_loader import list_backups, prune_backups
 from app.database.profile_repository import ProfileError, ProfileRepository
 from app.database.settings_repository import SettingsRepository
+from app.i18n import IDIOMAS, language_name
 from app.paths import backups_dir
 from app.ui.profile_dialog import ProfileDialog
 from app.ui.theme import SCALES
@@ -26,6 +27,7 @@ class SettingsPage(QWidget):
     profileCreateRequested = Signal()  # guardar la configuración actual como perfil nuevo
     profilesChanged = Signal()
     appearanceChanged = Signal()
+    languageChanged = Signal()
 
     def __init__(self, profiles: ProfileRepository, settings: SettingsRepository, standards, parent=None):
         super().__init__(parent)
@@ -124,7 +126,13 @@ class SettingsPage(QWidget):
         self.animations = QCheckBox("Animaciones de la interfaz")
         self.animations.toggled.connect(self._save_animations)
         ll.addWidget(self.animations)
-        ll.addWidget(label("Tema: Dark Tech.  Idioma: español (el único disponible en esta versión).", "muted"))
+        self.language = NoWheelComboBox()
+        for code in IDIOMAS:
+            self.language.addItem(language_name(code), code)
+        self.language.currentIndexChanged.connect(self._save_language)
+        ll.addLayout(hbox(label("Idioma de la limpieza de estilo", "fieldLabel"), self.language, None))
+        ll.addWidget(label("Tema: Dark Tech. El resto de la interfaz está en español; la limpieza de estilo admite "
+                           "español de Latinoamérica, de España e inglés.", "muted", wrap=True))
         layout.addWidget(look_card)
         layout.addStretch(1)
 
@@ -163,9 +171,10 @@ class SettingsPage(QWidget):
             checkbox.blockSignals(True)
             checkbox.setChecked(self.settings.get(key))
             checkbox.blockSignals(False)
-        self.scale.blockSignals(True)
-        self.scale.setCurrentIndex(max(0, self.scale.findData(self.settings.get("escala_interfaz"))))
-        self.scale.blockSignals(False)
+        for combo, key in ((self.scale, "escala_interfaz"), (self.language, "idioma")):
+            combo.blockSignals(True)
+            combo.setCurrentIndex(max(0, combo.findData(self.settings.get(key))))
+            combo.blockSignals(False)
         self._update_buttons()
 
     def _selected_id(self) -> int | None:
@@ -268,6 +277,10 @@ class SettingsPage(QWidget):
     def _save_scale(self) -> None:
         self._set("escala_interfaz", int(self.scale.currentData()), refresh=False)
         self.appearanceChanged.emit()
+
+    def _save_language(self) -> None:
+        self._set("idioma", self.language.currentData(), refresh=False)
+        self.languageChanged.emit()
 
     def _save_animations(self, enabled: bool) -> None:
         self._set("animaciones", bool(enabled), refresh=False)

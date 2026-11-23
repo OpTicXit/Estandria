@@ -14,6 +14,7 @@ DEFAULTS = {
     "perfil_inicial": None,  # id del perfil que se carga al iniciar
     "escala_interfaz": 100,
     "animaciones": True,
+    "idioma": "es-419",  # idioma de los textos con catálogo (por ahora, la limpieza de estilo)
     "recientes": [],
 }
 

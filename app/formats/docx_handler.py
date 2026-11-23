@@ -84,6 +84,11 @@ def text_runs(paragraph: Paragraph) -> list[Run]:
     return [Run(r, paragraph) for r in paragraph._p.xpath(_RUN_XPATH) if r.find(qn("w:t")) is not None]
 
 
+def text_nodes(paragraph: Paragraph) -> list:
+    """Nodos <w:t> del texto del párrafo, en orden. Su concatenación es el texto que se revisa y edita."""
+    return [t for r in paragraph._p.xpath(_RUN_XPATH) for t in r.findall(qn("w:t"))]
+
+
 def has_drawing(element) -> bool:
     return bool(element.xpath(".//w:drawing | .//w:pict | .//w:object"))
 

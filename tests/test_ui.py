@@ -125,6 +125,43 @@ def test_profiles_and_settings(app, full_doc, monkeypatch):
     reopened.close()
 
 
+def test_style_cleanup_flow(app, tmp_path):
+    import hashlib
+    from docx import Document
+    from app.ui.main_window import MainWindow
+    source = tmp_path / "estilo.docx"
+    doc = Document()
+    doc.add_paragraph("Cabe destacar que el sueño mejora la memoria. Se usó un lapso de tiempo breve.")
+    doc.save(source)
+    original_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+
+    window = MainWindow()
+    window.import_document(str(source))
+    wait(app, window)
+    first_copy = window.working_copy
+    window.run_style()
+    wait(app, window)
+    page = window.style_page
+    rules = {f.ruleId for f in page.findings}
+    assert {"muletilla", "pleonasmo"} <= rules
+    assert page.tree.topLevelItemCount() == len(rules)
+
+    pleonasm = next(f for f in page.findings if f.ruleId == "pleonasmo")
+    page._show_detail(pleonasm)
+    assert "[−lapso de tiempo−]" in page.diff.text() and "{+lapso+}" in page.diff.text()
+    page.rejected.emit(("pleonasmo", pleonasm.elemento, pleonasm.excerpt))
+    assert all(f.ruleId != "pleonasmo" for f in page.findings)
+
+    filler = next(f for f in page.findings if f.ruleId == "muletilla")
+    window.accept_style([filler])
+    wait(app, window)
+    assert window.working_copy != first_copy, "se trabaja sobre una copia nueva"
+    assert all(f.ruleId != "muletilla" for f in page.findings)
+    assert window.structure.elements[0].text.startswith("El sueño mejora")
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == original_hash, "el original no cambia"
+    window.close()
+
+
 def test_unsupported_file_shows_message(app, tmp_path):
     from app.ui.main_window import MainWindow
     window = MainWindow()
